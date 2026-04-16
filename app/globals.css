@@ -1,0 +1,297 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─────────────────────────────────────────
+   DESIGN TOKENS
+───────────────────────────────────────── */
+:root {
+  --background: #fafafa;
+  --foreground: #0d0d16;
+  --card: #ffffff;
+  --card-foreground: #0d0d16;
+  --popover: #ffffff;
+  --popover-foreground: #0d0d16;
+  --primary: #6366f1;
+  --primary-foreground: #ffffff;
+  --secondary: #f59e0b;
+  --secondary-foreground: #ffffff;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #6366f1;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #6366f1;
+  --chart-1: #6366f1;
+  --chart-2: #f59e0b;
+  --chart-3: #ef4444;
+  --chart-4: #06b6d4;
+  --chart-5: #8b5cf6;
+  --radius: 0.75rem;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #0d0d16;
+  --sidebar-primary: #6366f1;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f59e0b;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #6366f1;
+  /* Brand */
+  --brand-primary: #cfcfcf;
+  --brand-black: #000000;
+}
+
+.dark {
+  --background: #05050a;
+  --foreground: #f8fafc;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-foreground: #f8fafc;
+  --popover: #05050a;
+  --popover-foreground: #f8fafc;
+  --primary: #6366f1;
+  --primary-foreground: #ffffff;
+  --secondary: #f59e0b;
+  --secondary-foreground: #ffffff;
+  --muted: #1e1e28;
+  --muted-foreground: #94a3b8;
+  --accent: #6366f1;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #1e1e28;
+  --input: #1e1e28;
+  --ring: #6366f1;
+  --chart-1: #6366f1;
+  --chart-2: #f59e0b;
+  --chart-3: #ef4444;
+  --chart-4: #06b6d4;
+  --chart-5: #8b5cf6;
+  --sidebar: #05050a;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #6366f1;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f59e0b;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1e1e28;
+  --sidebar-ring: #6366f1;
+  /* Brand */
+  --brand-primary: #cfcfcf;
+  --brand-black: #000000;
+}
+
+@theme inline {
+  --font-sans: "DM Sans", "DM Sans Fallback";
+  --font-heading: "Outfit", "Outfit Fallback";
+  --font-display: var(--font-funnel);
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  /* Brand tokens — text-brand-primary, bg-brand-black, etc. */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-black: var(--brand-black);
+  /* Globe rotation animation */
+  --animate-globe-spin: globe-spin 60s linear infinite;
+}
+
+/* Globe keyframe — only raw CSS needed (can't define @keyframes in Tailwind classes) */
+@keyframes globe-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* CTA button text-slide animations */
+@keyframes slide-up-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-up-in {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes globe-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 50px rgba(57, 255, 20, 0.05),
+      inset 0 0 50px rgba(57, 255, 20, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 100px rgba(57, 255, 20, 0.15),
+      inset 0 0 80px rgba(57, 255, 20, 0.1);
+  }
+}
+
+.globe-atmosphere {
+  animation: globe-pulse 8s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   BASE LAYER
+───────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: auto !important;
+    scroll-padding-top: 80px;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Grain overlay — premium dark sites secret sauce */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 128px 128px;
+  }
+
+  .font-heading {
+    font-family: var(--font-heading);
+    padding-bottom: 0.15em !important;
+    line-height: 1.4 !important;
+    overflow: visible !important;
+  }
+
+  .text-fluid-hero {
+    font-size: clamp(2.8rem, 7.5vw, 6.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .text-fluid-section {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background-color: #39ff1433;
+    color: #39ff14;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+  }
+}
+
+/* ─────────────────────────────────────────
+   UTILITIES LAYER
+───────────────────────────────────────── */
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 40px #39ff1466;
+  }
+
+  .border-glow {
+    box-shadow:
+      0 0 0 1px #39ff1433,
+      0 0 20px #39ff1411;
+  }
+
+  .glass {
+    background: rgba(15, 15, 20, 0.6);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(57, 255, 20, 0.08);
+  }
+}
