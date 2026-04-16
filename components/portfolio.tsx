@@ -132,6 +132,7 @@ export function Portfolio() {
                   src={project.image}
                   alt={project.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
               </div>

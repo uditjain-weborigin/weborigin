@@ -1,9 +1,3 @@
-"use client";
-
-import { ParticleSystem } from "@/components/particles";
-import { CustomCursor } from "@/components/custom-cursor";
-import { Navbar } from "@/components/navbar";
-import { Hero } from "@/components/hero";
 import { HeroReak } from "@/components/hero-reak";
 import { NavbarReak } from "@/components/navbar-reak";
 import { MarqueeTrack } from "@/components/marquee-track";
@@ -19,7 +13,10 @@ import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
-    <main className="relative w-full overflow-hidden bg-background">
+    <main
+      id="main-content"
+      className="relative w-full overflow-hidden bg-background"
+    >
       {/* Background Elements */}
       {/* <ParticleSystem /> */}
       {/* <CustomCursor /> */}

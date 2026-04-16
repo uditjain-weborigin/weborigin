@@ -43,6 +43,8 @@
   /* Brand */
   --brand-primary: #cfcfcf;
   --brand-black: #000000;
+  /* Dark-mode browser chrome: scrollbars, inputs, selects */
+  color-scheme: dark;
 }
 
 .dark {
@@ -189,6 +191,20 @@
   * {
     @apply border-border outline-ring/50;
     box-sizing: border-box;
+    /* Remove 300ms tap delay on mobile touchscreens */
+    touch-action: manipulation;
+  }
+
+  /* Respect OS-level "Reduce Motion" accessibility preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   html {

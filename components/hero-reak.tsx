@@ -50,10 +50,16 @@ export function HeroReak() {
   }, [mouseX, mouseY]);
 
   return (
-    <section
-      className="relative pt-[120px] pb-[40px] md:pt-[160px] md:pb-[60px] lg:pt-[200px] lg:pb-[80px] xl:pt-[260px] xl:pb-[110px] bg-no-repeat bg-cover bg-center overflow-hidden"
-      style={{ backgroundImage: "url('/images/hero-5-bg.jpg')" }}
-    >
+    <section className="relative pt-[120px] pb-[40px] md:pt-[160px] md:pb-[60px] lg:pt-[200px] lg:pb-[80px] xl:pt-[260px] xl:pb-[110px] overflow-hidden">
+      {/* Priority-loaded background — prevents the black-screen flash on LCP */}
+      <Image
+        src="/images/hero-5-bg.jpg"
+        alt=""
+        fill
+        priority
+        className="object-cover object-center -z-10"
+        sizes="100vw"
+      />
       <div className="w-full max-w-[1750px] mx-auto px-[15px]">
         {/* ── Title Area (Z-index Sandwich + Parallax) ── */}
         <div className="relative mb-[60px] md:mb-[80px] lg:mb-[100px] xl:mb-[140px]">
@@ -61,9 +67,9 @@ export function HeroReak() {
           <motion.div
             className="relative z-10 text-center pointer-events-none"
             style={{ x: textX, y: textY }}
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <h1 className="font-display font-bold leading-[0.85] tracking-[-0.04em] text-white uppercase text-[80px] md:text-[140px] lg:text-[180px] xl:text-[240px] 2xl:text-[280px]">
               CRAFTING
@@ -76,7 +82,7 @@ export function HeroReak() {
             style={{ x: globeX, y: globeY, left: "50%" }}
             initial={{ opacity: 0, scale: 0.5, rotate: -30 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="relative w-[300px] h-[300px] md:w-[450px] md:h-[450px] lg:w-[550px] lg:h-[550px] xl:w-[750px] xl:h-[750px] rounded-full overflow-hidden globe-atmosphere after:content-[''] after:absolute after:inset-0 after:bg-[linear-gradient(to_top,black_0%,transparent_60%)]">
               <Image
@@ -94,9 +100,13 @@ export function HeroReak() {
           <motion.div
             className="relative z-30 text-center mt-[-20px] md:mt-[-40px] lg:mt-[-60px] xl:mt-[-80px] pointer-events-none"
             style={{ x: textX, y: textY }}
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.8,
+              delay: 0.25,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
             <div
               className="font-display font-bold leading-[0.85] tracking-[-0.04em] uppercase text-[80px] md:text-[140px] lg:text-[180px] xl:text-[240px] 2xl:text-[280px] text-transparent"
@@ -116,7 +126,7 @@ export function HeroReak() {
                 className="font-display text-[12px] font-bold text-white/40 uppercase tracking-[0.2em] mb-6 flex items-center gap-3"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8 }}
+                transition={{ delay: 0.4 }}
               >
                 What we do <ArrowDown size={14} />
               </motion.p>
@@ -127,7 +137,7 @@ export function HeroReak() {
                     key={service}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1 + i * 0.1, duration: 0.5 }}
+                    transition={{ delay: 0.5 + i * 0.08, duration: 0.4 }}
                   >
                     <Link
                       href="#"
@@ -156,7 +166,7 @@ export function HeroReak() {
                 className="max-w-[480px]"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2, duration: 0.8 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
               >
                 <div className="mb-10 text-[16px] md:text-[18px] leading-[1.6]">
                   <p className="text-white font-medium mb-4">

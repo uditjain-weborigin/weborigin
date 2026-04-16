@@ -159,7 +159,7 @@ export function NavbarReak() {
             >
               <span>Book a call</span>
               <span className="h-9 w-9 rounded-full bg-white text-black inline-flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:rotate-45">
-                <ArrowUpRight size={18} />
+                <ArrowUpRight size={18} aria-hidden="true" />
               </span>
             </motion.a>
 
@@ -170,6 +170,9 @@ export function NavbarReak() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
+              aria-label="Open navigation menu"
+              aria-expanded={drawerOpen}
+              aria-controls="mobile-drawer"
             >
               <span className="block w-[30px] h-[2px] bg-white rounded-full" />
               <span className="block w-[24px] h-[2px] bg-white rounded-full self-end" />
@@ -183,6 +186,10 @@ export function NavbarReak() {
       <AnimatePresence>
         {drawerOpen && (
           <motion.div
+            id="mobile-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
             className="fixed inset-0 z-[1200] bg-[#05050a] flex flex-col px-[40px] pt-[40px] pb-[60px]"
             initial={{ clipPath: "circle(0% at 100% 0%)" }}
             animate={{ clipPath: "circle(150% at 100% 0%)" }}
@@ -203,6 +210,7 @@ export function NavbarReak() {
               <button
                 className="bg-transparent border border-white/20 text-white w-12 h-12 rounded-full text-[28px] cursor-pointer flex items-center justify-center hover:bg-white/5 transition-colors"
                 onClick={() => setDrawerOpen(false)}
+                aria-label="Close navigation menu"
               >
                 &times;
               </button>

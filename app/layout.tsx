@@ -56,6 +56,14 @@ export const metadata: Metadata = {
     siteName: "Web Origin",
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Web Origin — Digital Studio for Ambitious Brands",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -64,6 +72,7 @@ export const metadata: Metadata = {
       "We build high-performance websites that rank, convert, and scale.",
     creator: "@weborigin_in",
     site: "@weborigin_in",
+    images: ["/og-image.jpg"],
   },
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
@@ -118,6 +127,12 @@ export default function RootLayout({
             }),
           }}
         />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:rounded-lg focus:font-semibold"
+        >
+          Skip to content
+        </a>
         <SmoothScroll>{children}</SmoothScroll>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>

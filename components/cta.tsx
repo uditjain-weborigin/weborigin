@@ -170,47 +170,61 @@ export function CTA() {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                          <label className="text-xs text-muted-foreground mb-1.5 block">
+                          <label
+                            htmlFor="field-name"
+                            className="text-xs text-muted-foreground mb-1.5 block"
+                          >
                             Your name *
                           </label>
                           <input
+                            id="field-name"
                             type="text"
                             name="name"
                             value={form.name}
                             onChange={handleChange}
                             required
+                            autoComplete="name"
                             placeholder="Rahul Mehra"
-                            className="w-full px-4 py-2.5 rounded-xl bg-input border border-border text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                            className="w-full px-4 py-2.5 rounded-xl bg-input border border-border text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
                           />
                         </div>
                         <div>
-                          <label className="text-xs text-muted-foreground mb-1.5 block">
+                          <label
+                            htmlFor="field-email"
+                            className="text-xs text-muted-foreground mb-1.5 block"
+                          >
                             Work email *
                           </label>
                           <input
+                            id="field-email"
                             type="email"
                             name="email"
                             value={form.email}
                             onChange={handleChange}
                             required
+                            autoComplete="email"
                             placeholder="rahul@company.com"
-                            className="w-full px-4 py-2.5 rounded-xl bg-input border border-border text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                            className="w-full px-4 py-2.5 rounded-xl bg-input border border-border text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="text-xs text-muted-foreground mb-1.5 block">
+                        <label
+                          htmlFor="field-message"
+                          className="text-xs text-muted-foreground mb-1.5 block"
+                        >
                           Tell us about your project *
                         </label>
                         <textarea
+                          id="field-message"
                           name="message"
                           value={form.message}
                           onChange={handleChange}
                           required
                           placeholder="What are you building? What's your budget and timeline?"
                           rows={4}
-                          className="w-full px-4 py-2.5 rounded-xl bg-input border border-border text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+                          className="w-full px-4 py-2.5 rounded-xl bg-input border border-border text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors resize-none"
                         />
                       </div>
 
