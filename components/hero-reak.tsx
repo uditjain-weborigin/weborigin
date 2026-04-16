@@ -98,12 +98,12 @@ export function HeroReak() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1
+            <div
               className="font-display font-bold leading-[0.85] tracking-[-0.04em] uppercase text-[80px] md:text-[140px] lg:text-[180px] xl:text-[240px] 2xl:text-[280px] text-transparent"
               style={{ WebkitTextStroke: "1px rgba(255,255,255,0.4)" }}
             >
               BRAND
-            </h1>
+            </div>
           </motion.div>
         </div>
 

@@ -26,6 +26,10 @@ const funnelDisplay = Funnel_Display({
   display: "swap",
 });
 
+const baseUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "https://theweborigin.com";
+
 export const metadata: Metadata = {
   title: "Web Origin — Digital Studio for Ambitious Brands",
   description:
@@ -42,7 +46,7 @@ export const metadata: Metadata = {
     "Ghaziabad",
   ],
   authors: [{ name: "Web Origin Studio" }],
-  metadataBase: new URL("https://www.theweborigin.com/"),
+  metadataBase: new URL(baseUrl),
   alternates: { canonical: "/" },
   openGraph: {
     title: "Web Origin — Digital Studio for Ambitious Brands",
@@ -83,6 +87,37 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${dmSans.variable} ${funnelDisplay.variable} font-sans antialiased bg-background text-foreground`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Web Origin",
+              url: baseUrl,
+              logo: `${baseUrl}/icon.svg`,
+              description:
+                "We design and build high-performance web experiences for startups and enterprises.",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Bangalore",
+                addressRegion: "Karnataka",
+                addressCountry: "IN",
+              },
+              contactPoint: {
+                "@type": "ContactPoint",
+                email: "hello@theweborigin.com",
+                contactType: "customer service",
+              },
+              sameAs: [
+                "https://twitter.com/weborigin_in",
+                "https://instagram.com/weborigin.in",
+                "https://linkedin.com/company/weborigin",
+                "https://github.com/weborigin",
+              ],
+            }),
+          }}
+        />
         <SmoothScroll>{children}</SmoothScroll>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
