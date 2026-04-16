@@ -3,9 +3,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  images: {
-    unoptimized: true,
+  experimental: {
+    optimizePackageImports: ["framer-motion", "lucide-react", "motion"],
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;

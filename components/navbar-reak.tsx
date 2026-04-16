@@ -89,6 +89,8 @@ export function NavbarReak() {
               <img
                 src="/theweborigin.svg"
                 alt="The Web Origin"
+                width={180}
+                height={36}
                 style={{
                   height: scrolled ? "30px" : "36px",
                   width: "auto",
@@ -193,6 +195,8 @@ export function NavbarReak() {
                 <img
                   src="/theweborigin.svg"
                   alt="The Web Origin"
+                  width={160}
+                  height={32}
                   style={{ height: "32px", width: "auto" }}
                   className="brightness-125"
                 />
