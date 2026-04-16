@@ -141,13 +141,6 @@
   }
 }
 
-/* Force globe spin onto GPU compositor layer */
-.animate-globe-spin {
-  will-change: transform;
-  transform-origin: center center;
-  backface-visibility: hidden;
-}
-
 /* CTA button text-slide animations */
 @keyframes slide-up-out {
   from {
@@ -187,7 +180,6 @@
 
 .globe-atmosphere {
   animation: globe-pulse 8s ease-in-out infinite;
-  will-change: box-shadow;
 }
 
 /* ─────────────────────────────────────────

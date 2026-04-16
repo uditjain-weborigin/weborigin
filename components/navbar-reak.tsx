@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react";
 
@@ -86,17 +87,16 @@ export function NavbarReak() {
             transition={{ delay: 0.2 }}
           >
             <Link href="/" className="group">
-              <img
+              <Image
                 src="/theweborigin.svg"
-                alt="The Web Origin"
+                alt="The Web Origin logo"
                 width={180}
                 height={36}
-                style={{
-                  height: scrolled ? "30px" : "36px",
-                  width: "auto",
-                  transition: "height 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
-                }}
-                className="brightness-110 contrast-125"
+                className={[
+                  "brightness-110 contrast-125 w-auto transition-all duration-[400ms] cubic-bezier(0.22,1,0.36,1)",
+                  scrolled ? "h-[30px]" : "h-[36px]",
+                ].join(" ")}
+                priority
               />
             </Link>
           </motion.div>
@@ -192,13 +192,12 @@ export function NavbarReak() {
             {/* Drawer header */}
             <div className="flex items-center justify-between mb-16">
               <Link href="/" onClick={() => setDrawerOpen(false)}>
-                <img
+                <Image
                   src="/theweborigin.svg"
-                  alt="The Web Origin"
+                  alt="The Web Origin logo"
                   width={160}
                   height={32}
-                  style={{ height: "32px", width: "auto" }}
-                  className="brightness-125"
+                  className="h-[32px] w-auto brightness-125"
                 />
               </Link>
               <button
