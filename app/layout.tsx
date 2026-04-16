@@ -47,12 +47,12 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Web Origin Studio" }],
   metadataBase: new URL(baseUrl),
-  alternates: { canonical: baseUrl },
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Web Origin — Digital Studio for Ambitious Brands",
     description:
       "We build high-performance websites that rank, convert, and scale. Strategy, design & dev under one roof.",
-    url: baseUrl,
+    url: "/",
     siteName: "Web Origin",
     locale: "en_IN",
     type: "website",
