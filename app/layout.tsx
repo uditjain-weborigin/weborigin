@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "Web Origin — Digital Studio for Ambitious Brands",
     description:
       "We build high-performance websites that rank, convert, and scale. Strategy, design & dev under one roof.",
-    url: "/",
+    url: "https://theweborigin.com",
     siteName: "Web Origin",
     locale: "en_IN",
     type: "website",
@@ -100,8 +100,8 @@ export default function RootLayout({
                 "We design and build high-performance web experiences for startups and enterprises.",
               address: {
                 "@type": "PostalAddress",
-                addressLocality: "Delhi",
-                addressRegion: "Delhi",
+                addressLocality: "Bangalore",
+                addressRegion: "Karnataka",
                 addressCountry: "IN",
               },
               contactPoint: {
