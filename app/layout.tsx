@@ -100,8 +100,8 @@ export default function RootLayout({
                 "We design and build high-performance web experiences for startups and enterprises.",
               address: {
                 "@type": "PostalAddress",
-                addressLocality: "Bangalore",
-                addressRegion: "Karnataka",
+                addressLocality: "Delhi",
+                addressRegion: "Delhi",
                 addressCountry: "IN",
               },
               contactPoint: {

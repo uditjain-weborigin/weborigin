@@ -65,7 +65,7 @@ export function Footer() {
               and web apps for ambitious brands worldwide.
             </p>
             <p className="text-xs text-muted-foreground">
-              📍 Bangalore, India · Remote-first
+              📍 Delhi, India · Remote-first
             </p>
           </motion.div>
 
