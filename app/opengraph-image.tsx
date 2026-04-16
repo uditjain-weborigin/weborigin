@@ -144,7 +144,7 @@ export default async function Image() {
           color: "#8a8795",
         }}
       >
-        weborigin.in
+        theweborigin.com
       </div>
     </div>,
     { ...size },

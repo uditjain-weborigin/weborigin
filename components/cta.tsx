@@ -87,13 +87,13 @@ export function CTA() {
               {/* Contact details */}
               <div className="space-y-3">
                 <a
-                  href="mailto:hello@weborigin.in"
+                  href="mailto:hello@theweborigin.com"
                   className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors group"
                 >
                   <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
                     <Mail size={14} />
                   </div>
-                  hello@weborigin.in
+                  hello@theweborigin.com
                 </a>
                 <a
                   href="tel:+919876543210"
@@ -217,7 +217,7 @@ export function CTA() {
                       {formState === "error" && (
                         <p className="text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-lg px-3 py-2">
                           Something went wrong. Please email us directly at
-                          hello@weborigin.in
+                          hello@theweborigin.com
                         </p>
                       )}
 

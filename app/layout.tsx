@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     title: "Web Origin — Digital Studio for Ambitious Brands",
     description:
       "We build high-performance websites that rank, convert, and scale. Strategy, design & dev under one roof.",
-    url: "https://weborigin.in",
+    url: "https://theweborigin.com",
     siteName: "Web Origin",
     locale: "en_IN",
     type: "website",
