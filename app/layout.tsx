@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Outfit, DM_Sans, Funnel_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { Preloader } from "@/components/preloader";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -133,6 +134,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <Preloader />
         <SmoothScroll>{children}</SmoothScroll>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>

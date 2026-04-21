@@ -143,6 +143,22 @@
   }
 }
 
+/* Preloader pulse animation from Reak Template */
+@keyframes oit-preloader {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.animate-oit-preloader {
+  animation: oit-preloader 1.3s linear infinite;
+}
+
 /* CTA button text-slide animations */
 @keyframes slide-up-out {
   from {
@@ -276,14 +292,15 @@
   }
 
   ::-webkit-scrollbar {
-    width: 4px;
+    width: 10px;
   }
   ::-webkit-scrollbar-track {
     background: var(--background);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.25); /* More visible default color */
+    border-radius: 6px;
+    border: 2px solid var(--background); /* padding effect */
   }
   ::-webkit-scrollbar-thumb:hover {
     background: var(--primary);

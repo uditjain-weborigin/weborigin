@@ -1,15 +1,50 @@
+import dynamic from "next/dynamic";
 import { HeroReak } from "@/components/hero-reak";
 import { NavbarReak } from "@/components/navbar-reak";
-import { MarqueeTrack } from "@/components/marquee-track";
-import { Metrics } from "@/components/metrics";
-import { GlobalReach } from "@/components/global-reach";
-import { Services } from "@/components/services";
-import { Portfolio } from "@/components/portfolio";
-import { Process } from "@/components/process";
-import { Testimonials } from "@/components/testimonials";
-import { Pricing } from "@/components/pricing";
-import { CTA } from "@/components/cta";
-import { Footer } from "@/components/footer";
+
+const AboutReak = dynamic(
+  () => import("@/components/about-reak").then((mod) => mod.AboutReak),
+  { ssr: true },
+);
+const MarqueeTrack = dynamic(
+  () => import("@/components/marquee-track").then((mod) => mod.MarqueeTrack),
+  { ssr: true },
+);
+const Metrics = dynamic(
+  () => import("@/components/metrics").then((mod) => mod.Metrics),
+  { ssr: true },
+);
+const GlobalReach = dynamic(
+  () => import("@/components/global-reach").then((mod) => mod.GlobalReach),
+  { ssr: true },
+);
+const Services = dynamic(
+  () => import("@/components/services").then((mod) => mod.Services),
+  { ssr: true },
+);
+const Portfolio = dynamic(
+  () => import("@/components/portfolio").then((mod) => mod.Portfolio),
+  { ssr: true },
+);
+const Process = dynamic(
+  () => import("@/components/process").then((mod) => mod.Process),
+  { ssr: true },
+);
+const Testimonials = dynamic(
+  () => import("@/components/testimonials").then((mod) => mod.Testimonials),
+  { ssr: true },
+);
+const Pricing = dynamic(
+  () => import("@/components/pricing").then((mod) => mod.Pricing),
+  { ssr: true },
+);
+const CTA = dynamic(() => import("@/components/cta").then((mod) => mod.CTA), {
+  ssr: true,
+});
+const Footer = dynamic(
+  () => import("@/components/footer").then((mod) => mod.Footer),
+  { ssr: true },
+);
 
 export default function Home() {
   return (
@@ -17,15 +52,14 @@ export default function Home() {
       id="main-content"
       className="relative w-full overflow-hidden bg-background"
     >
-      {/* Background Elements */}
-      {/* <ParticleSystem /> */}
-      {/* <CustomCursor /> */}
-
       {/* Navigation — Reak Brand Agency Dark style */}
       <NavbarReak />
 
       {/* Hero Section — Reak Brand Agency Dark style */}
       <HeroReak />
+
+      {/* About Section — "Not just another agency" */}
+      <AboutReak />
 
       {/* Tech Stack Marquee — sits between Hero and Metrics */}
       <MarqueeTrack />

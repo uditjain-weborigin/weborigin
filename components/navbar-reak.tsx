@@ -93,9 +93,10 @@ export function NavbarReak() {
                 width={180}
                 height={36}
                 className={[
-                  "brightness-110 contrast-125 w-auto transition-all duration-[400ms] cubic-bezier(0.22,1,0.36,1)",
+                  "brightness-110 contrast-125 transition-all duration-[400ms] cubic-bezier(0.22,1,0.36,1)",
                   scrolled ? "h-[30px]" : "h-[36px]",
                 ].join(" ")}
+                style={{ width: "auto", height: scrolled ? "30px" : "36px" }}
                 priority
               />
             </Link>
@@ -204,7 +205,8 @@ export function NavbarReak() {
                   alt="The Web Origin logo"
                   width={160}
                   height={32}
-                  className="h-[32px] w-auto brightness-125"
+                  className="h-[32px] brightness-125"
+                  style={{ width: "auto" }}
                 />
               </Link>
               <button
