@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { Outfit, DM_Sans, Funnel_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SmoothScroll } from "@/components/smooth-scroll";
@@ -134,7 +135,9 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Preloader />
+        <Suspense fallback={null}>
+          <Preloader />
+        </Suspense>
         <SmoothScroll>{children}</SmoothScroll>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
