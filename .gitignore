@@ -21,3 +21,7 @@ skills-lock.json
 
 # TypeScript cache
 *.tsbuildinfo
+
+# Sanity
+.sanity/
+dist/sanity*
