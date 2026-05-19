@@ -11,8 +11,6 @@ import {
   SETTINGS_QUERY,
 } from "@/sanity/lib/queries";
 
-// export const revalidate = 60;
-
 const POSTS_PER_PAGE = 9;
 
 export async function generateMetadata(): Promise<Metadata> {

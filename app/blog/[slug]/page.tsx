@@ -17,8 +17,6 @@ import {
   POST_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
 
-// export const revalidate = 60;
-
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : process.env.NEXT_PUBLIC_SITE_URL || "https://theweborigin.com";
