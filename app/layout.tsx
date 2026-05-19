@@ -1,31 +1,34 @@
 import type { Metadata, Viewport } from "next";
+import { draftMode } from "next/headers";
+import { Funnel_Display } from "next/font/google";
 import { Suspense } from "react";
-import { Outfit, DM_Sans, Funnel_Display } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
+import dynamic from "next/dynamic";
 import { SmoothScroll } from "@/components/smooth-scroll";
-import { Preloader } from "@/components/preloader";
 import "./globals.css";
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
+// Lazy-load anything that isn't needed for the initial paint.
+// All three of these only inject scripts (no critical SSR markup), so
+// keeping them as code-split chunks is fine — the page still SSRs.
+const Analytics = dynamic(() =>
+  import("@vercel/analytics/next").then((m) => m.Analytics),
+);
+const VisualEditing = dynamic(() =>
+  import("next-sanity/visual-editing").then((m) => m.VisualEditing),
+);
+const SanityLive = dynamic(() =>
+  import("@/sanity/lib/live").then((m) => m.SanityLive),
+);
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
-
-// Funnel Display — used by navbar & hero components (replaces Google Fonts @import waterfall)
+// Single variable font drives every heading, body, and display weight.
+// Removing Outfit + DM Sans saves ~14 font requests on first paint.
 const funnelDisplay = Funnel_Display({
   subsets: ["latin"],
   variable: "--font-funnel",
-  weight: ["300", "400", "500", "600", "700", "800"],
+  // Only ship the weights actually used (400/500/600/700)
+  weight: ["400", "500", "600", "700"],
   display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 const baseUrl = process.env.VERCEL_URL
@@ -88,15 +91,17 @@ export const viewport: Viewport = {
   userScalable: true,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isDraftMode = (await draftMode()).isEnabled;
+
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${outfit.variable} ${dmSans.variable} ${funnelDisplay.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${funnelDisplay.variable} font-sans antialiased bg-background text-foreground`}
       >
         <script
           type="application/ld+json"
@@ -131,15 +136,23 @@ export default function RootLayout({
         />
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:rounded-lg focus:font-semibold"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-9999 focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:rounded-lg focus:font-semibold"
         >
           Skip to content
         </a>
-        <Suspense fallback={null}>
-          <Preloader />
-        </Suspense>
         <SmoothScroll>{children}</SmoothScroll>
-        {process.env.NODE_ENV === "production" && <Analytics />}
+        {/* Only spin up the Sanity Live runtime when in draft preview — saves ~30KB JS + a long-lived EventSource on every public visit */}
+        {isDraftMode && (
+          <Suspense fallback={null}>
+            <SanityLive />
+            <VisualEditing />
+          </Suspense>
+        )}
+        {process.env.NODE_ENV === "production" && (
+          <Suspense fallback={null}>
+            <Analytics />
+          </Suspense>
+        )}
       </body>
     </html>
   );

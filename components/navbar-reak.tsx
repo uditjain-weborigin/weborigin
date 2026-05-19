@@ -11,11 +11,12 @@ import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react";
  */
 
 const navLinks = [
-  { label: "Home", href: "#" },
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#portfolio" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/", section: "" },
+  { label: "Services", href: "/#services", section: "services" },
+  { label: "Work", href: "/#portfolio", section: "portfolio" },
+  { label: "Blog", href: "/blog", section: "blog" },
+  { label: "Pricing", href: "/#pricing", section: "pricing" },
+  { label: "Contact", href: "/#contact", section: "contact" },
 ];
 
 export function NavbarReak() {
@@ -33,13 +34,14 @@ export function NavbarReak() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Active section tracking (Scrollspy)
+  // Active section tracking (Scrollspy) — only meaningful on the homepage
   useEffect(() => {
-    const sections = navLinks.map((l) => l.href.replace("#", ""));
+    const sections = navLinks
+      .map((l) => l.section)
+      .filter((s) => s && s !== "blog");
     const observers: IntersectionObserver[] = [];
 
     sections.forEach((id) => {
-      if (!id) return;
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
@@ -70,11 +72,11 @@ export function NavbarReak() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className={[
-          "fixed top-0 left-0 right-0 z-[1000]",
+          "fixed top-0 left-0 right-0 z-1000",
           "transition-[background,padding,backdrop-filter] duration-500 ease-in-out",
           "py-[25px]",
           scrolled
-            ? "bg-black/40 backdrop-blur-xl !py-[14px] border-b border-white/10"
+            ? "bg-black/40 backdrop-blur-xl py-[14px]! border-b border-white/10"
             : "bg-transparent",
         ].join(" ")}
       >
@@ -92,11 +94,11 @@ export function NavbarReak() {
                 alt="The Web Origin logo"
                 width={180}
                 height={36}
-                className={[
-                  "brightness-110 contrast-125 transition-all duration-[400ms] cubic-bezier(0.22,1,0.36,1)",
-                  scrolled ? "h-[30px]" : "h-[36px]",
-                ].join(" ")}
-                style={{ width: "auto", height: scrolled ? "30px" : "36px" }}
+                className="brightness-110 contrast-125 transition-all duration-400 cubic-bezier(0.22,1,0.36,1)"
+                style={{
+                  width: scrolled ? "150px" : "180px",
+                  height: scrolled ? "30px" : "36px",
+                }}
                 priority
               />
             </Link>
@@ -106,7 +108,7 @@ export function NavbarReak() {
           <nav aria-label="Main navigation">
             <ul className="hidden xl:flex items-center list-none m-0 p-0 gap-10">
               {navLinks.map((item, i) => {
-                const isActive = activeSection === item.href.replace("#", "");
+                const isActive = activeSection === item.section;
                 return (
                   <motion.li
                     key={item.label}
@@ -147,8 +149,9 @@ export function NavbarReak() {
           <div className="flex items-center gap-6">
             {/* CTA */}
             <motion.a
-              href="#contact"
-              className="hidden xl:inline-flex items-center justify-between gap-3 py-2.5 pl-[24px] pr-[10px] rounded-full text-[13px] font-bold uppercase tracking-wider text-white border border-white/20 backdrop-blur-3xl bg-white/5 no-underline whitespace-nowrap"
+              href="/#contact"
+              className="hidden xl:inline-flex items-center justify-between gap-3 py-2.5 pl-[24px] pr-[10px] rounded-full text-[13px] font-bold uppercase tracking-wider text-white border border-white/20 backdrop-blur-3xl no-underline whitespace-nowrap"
+              style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
@@ -159,7 +162,7 @@ export function NavbarReak() {
               whileTap={{ scale: 0.95 }}
             >
               <span>Book a call</span>
-              <span className="h-9 w-9 rounded-full bg-white text-black inline-flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:rotate-45">
+              <span className="h-9 w-9 rounded-full bg-white text-black inline-flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45">
                 <ArrowUpRight size={18} aria-hidden="true" />
               </span>
             </motion.a>
@@ -191,7 +194,7 @@ export function NavbarReak() {
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
-            className="fixed inset-0 z-[1200] bg-[#05050a] flex flex-col px-[40px] pt-[40px] pb-[60px]"
+            className="fixed inset-0 z-1200 bg-[#05050a] flex flex-col px-[40px] pt-[40px] pb-[60px]"
             initial={{ clipPath: "circle(0% at 100% 0%)" }}
             animate={{ clipPath: "circle(150% at 100% 0%)" }}
             exit={{ clipPath: "circle(0% at 100% 0%)" }}
@@ -205,8 +208,8 @@ export function NavbarReak() {
                   alt="The Web Origin logo"
                   width={160}
                   height={32}
-                  className="h-[32px] brightness-125"
-                  style={{ width: "auto" }}
+                  className="brightness-125"
+                  style={{ width: "160px", height: "32px" }}
                 />
               </Link>
               <button
@@ -246,7 +249,7 @@ export function NavbarReak() {
               transition={{ delay: 0.8 }}
             >
               <Link
-                href="#contact"
+                href="/#contact"
                 className="flex items-center justify-center gap-3 py-5 px-[40px] rounded-full text-lg font-bold uppercase tracking-widest text-black bg-white no-underline mt-[40px] transition-transform hover:scale-[1.02] active:scale-[0.98]"
                 onClick={() => setDrawerOpen(false)}
               >

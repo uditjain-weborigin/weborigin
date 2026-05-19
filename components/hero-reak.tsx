@@ -39,24 +39,54 @@ export function HeroReak() {
   const globeY = useTransform(sy, [-0.5, 0.5], ["10px", "-10px"]);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = e.clientX / window.innerWidth - 0.5;
-      const y = e.clientY / window.innerHeight - 0.5;
-      mouseX.set(x);
-      mouseY.set(y);
+    // Skip the parallax entirely on touch devices and when the user has
+    // requested reduced motion — saves a constant stream of style writes.
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (reduced || isTouch) return;
+
+    let pendingX = 0;
+    let pendingY = 0;
+    let rafId = 0;
+    let queued = false;
+
+    const flush = () => {
+      mouseX.set(pendingX);
+      mouseY.set(pendingY);
+      queued = false;
     };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      pendingX = e.clientX / window.innerWidth - 0.5;
+      pendingY = e.clientY / window.innerHeight - 0.5;
+      if (!queued) {
+        queued = true;
+        rafId = requestAnimationFrame(flush);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(rafId);
+    };
   }, [mouseX, mouseY]);
 
   return (
     <section className="relative pt-[120px] pb-[40px] md:pt-[160px] md:pb-[60px] lg:pt-[200px] lg:pb-[80px] xl:pt-[260px] xl:pb-[110px] overflow-hidden">
-      {/* Priority-loaded background — prevents the black-screen flash on LCP */}
+      {/* Priority-loaded background — this is the LCP element on most viewports.
+          fetchPriority="high" hints the browser to start the request before
+          the Next/Image runtime hydrates. quality=70 still looks great as
+          a darkened backdrop and shaves ~40% off the byte size. */}
       <Image
         src="/images/hero-5-bg.jpg"
         alt=""
         fill
         priority
+        fetchPriority="high"
+        quality={70}
         className="object-cover object-center -z-10"
         sizes="100vw"
       />
@@ -90,8 +120,13 @@ export function HeroReak() {
                 alt="Globe"
                 width={750}
                 height={750}
+                sizes="(max-width:768px) 300px, (max-width:1024px) 450px, (max-width:1280px) 550px, 750px"
+                quality={75}
                 className="w-full h-full object-cover animate-globe-spin"
-                priority
+                /* No `priority` here: the 285 KB globe was racing the
+                   real LCP background for bandwidth. Eager-loading is
+                   enough — it's still in the initial viewport. */
+                loading="eager"
               />
             </div>
           </motion.div>
@@ -216,7 +251,7 @@ export function HeroReak() {
                       hover: { scale: 1.1, rotate: 45 },
                     }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="h-[42px] w-[42px] rounded-full bg-white text-black inline-flex items-center justify-center flex-shrink-0"
+                    className="h-[42px] w-[42px] rounded-full bg-white text-black inline-flex items-center justify-center shrink-0"
                   >
                     <ArrowUpRight size={18} />
                   </motion.span>

@@ -86,10 +86,12 @@
 }
 
 @theme inline {
-  --font-sans: "DM Sans", "DM Sans Fallback";
-  --font-heading: "Outfit", "Outfit Fallback";
-  --font-display: var(--font-funnel);
-  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  /* Single Funnel Display variable powers body, headings, and display text.
+     This collapses 14 font-file requests down to 4. */
+  --font-sans: var(--font-funnel), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: var(--font-funnel), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-funnel), system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -226,6 +228,11 @@
   html {
     scroll-behavior: auto !important;
     scroll-padding-top: 80px;
+    /* Required by motion's `useScroll({ target })` — the default scroll
+       container is `document.scrollingElement` (i.e. <html>), and motion
+       warns if it's `position: static` because relative offsets can't be
+       measured reliably. */
+    position: relative;
   }
 
   html.lenis,
@@ -254,6 +261,10 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Required by framer-motion's `useScroll({ target })` so that scroll
+       offsets resolve against a positioned offsetParent instead of the
+       statically-positioned <body>. */
+    position: relative;
   }
 
   /* Grain overlay — premium dark sites secret sauce */

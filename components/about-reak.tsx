@@ -596,7 +596,13 @@ export function AboutReak() {
             <div style={{ paddingLeft: 90 }} className="about-content-pl">
               {/* Heading with scroll-driven word-by-word reveal */}
               {/* oit-section-title: 700w, 144px, line-height 1.06, white */}
-              <div style={{ paddingTop: 15, marginBottom: 60 }}>
+              <div
+                style={{
+                  paddingTop: 15,
+                  marginBottom: 60,
+                  position: "relative",
+                }}
+              >
                 <ScrollRevealHeading text="Turning Vision into reality" />
               </div>
 

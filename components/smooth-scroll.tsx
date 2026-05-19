@@ -1,44 +1,67 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import Lenis from "lenis";
+import { useEffect } from "react";
 
 /**
- * SmoothScroll - High-performance inertial scroll using Lenis
- * Optimized for premium studio-grade fluidity.
+ * SmoothScroll - High-performance inertial scroll using Lenis.
+ *
+ * Performance notes:
+ *  - Lenis is dynamically imported AFTER first paint so it never blocks
+ *    hydration, LCP, or TTI.
+ *  - Skipped entirely on touch devices and when the user has
+ *    `prefers-reduced-motion: reduce`.
+ *  - Uses `requestIdleCallback` (with a `setTimeout` fallback) so we never
+ *    fight the browser for the main thread during the critical path.
  */
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
-  const lenisRef = useRef<Lenis | null>(null);
-
   useEffect(() => {
-    // Initialize Lenis for the absolute "maximum buttery smoothness" (simulating GSAP smooth: 1.5)
-    const lenis = new Lenis({
-      // We use a pure duration-based easing (Expo Out) instead of linear interpolation (lerp)
-      // This is exactly how GSAP ScrollSmoother gets that heavy, premium momentum kick.
-      duration: 1.5,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Expo.easeOut
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1, // Keep at 1 so the initial flick feels natural
-      syncTouch: false, // Allow native touch drag, but apply momentum after
-      // lerp is deliberately omitted here so it doesn't conflict with duration/easing
-    });
+    if (typeof window === "undefined") return;
 
-    lenisRef.current = lenis;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (reducedMotion || isTouch) return;
 
-    // Custom RAF loop synced to browser refresh rate for maximum performance
-    let rfId: number;
-    function raf(time: number) {
-      lenis.raf(time);
-      rfId = requestAnimationFrame(raf);
-    }
-    rfId = requestAnimationFrame(raf);
+    let lenis: { destroy: () => void; raf: (time: number) => void } | null =
+      null;
+    let rafId = 0;
+    let cancelled = false;
 
-    // Clean up
+    const start = async () => {
+      const { default: Lenis } = await import("lenis");
+      if (cancelled) return;
+
+      lenis = new Lenis({
+        duration: 1.5,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        syncTouch: false,
+      });
+
+      const raf = (time: number) => {
+        lenis?.raf(time);
+        rafId = requestAnimationFrame(raf);
+      };
+      rafId = requestAnimationFrame(raf);
+    };
+
+    // Defer until the browser is idle so we never block first paint.
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void) => number;
+    };
+    const idle =
+      w.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1));
+    const id = idle(start);
+
     return () => {
-      lenis.destroy();
-      cancelAnimationFrame(rfId);
+      cancelled = true;
+      if (typeof id === "number") clearTimeout(id);
+      cancelAnimationFrame(rafId);
+      lenis?.destroy();
     };
   }, []);
 

@@ -1,0 +1,10 @@
+import { draftMode } from "next/headers";
+import { NextResponse, type NextRequest } from "next/server";
+
+export async function GET(request: NextRequest) {
+  (await draftMode()).disable();
+
+  const redirectTo = request.nextUrl.searchParams.get("redirect") ?? "/";
+  const safePath = redirectTo.startsWith("/") ? redirectTo : "/";
+  return NextResponse.redirect(new URL(safePath, request.nextUrl.origin));
+}
