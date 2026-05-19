@@ -17,9 +17,9 @@ import {
   POST_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : process.env.NEXT_PUBLIC_SITE_URL || "https://theweborigin.com";
+// IMPORTANT: never use VERCEL_URL here — it resolves to the preview deployment
+// URL (e.g. my-project-abc.vercel.app), not the canonical production domain.
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://theweborigin.com";
 
 export async function generateStaticParams() {
   const slugs = await client.withConfig({ useCdn: false }).fetch(POST_SLUGS_QUERY);

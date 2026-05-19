@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+// ISR: cache for 60 s, revalidate in background.
+// The Sanity webhook (/api/revalidate) still purges this immediately on publish.
+export const revalidate = 60;
+
 import { PostCard } from "@/components/blog/post-card";
 import { resolveOpenGraphImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";

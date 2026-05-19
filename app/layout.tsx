@@ -61,14 +61,6 @@ export const metadata: Metadata = {
     siteName: "Web Origin",
     locale: "en_IN",
     type: "website",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Web Origin — Digital Studio for Ambitious Brands",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -77,7 +69,6 @@ export const metadata: Metadata = {
       "We build high-performance websites that rank, convert, and scale.",
     creator: "@weborigin_in",
     site: "@weborigin_in",
-    images: ["/og-image.jpg"],
   },
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],

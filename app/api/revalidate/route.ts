@@ -1,3 +1,6 @@
+// Next.js 16: revalidateTag now requires a second cache-profile arg.
+// updateTag is the new API for immediate tag invalidation (no second arg needed)
+// — perfect for webhooks where we want instant purge, not stale-while-revalidate.
 import { revalidatePath, updateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { parseBody } from "next-sanity/webhook";
