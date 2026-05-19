@@ -4,7 +4,7 @@ import { parseBody } from "next-sanity/webhook";
 
 type WebhookPayload = {
   _type?: string;
-  slug?: string;
+  slug?: { current: string } | string;
   tags?: string[];
 };
 
@@ -28,20 +28,22 @@ export async function POST(req: NextRequest) {
       body.tags.forEach((tag) => updateTag(tag));
     }
 
+    const slugString = typeof body.slug === 'object' && body.slug !== null ? body.slug.current : body.slug;
+
     if (body._type === "post") {
-      revalidatePath("/blog");
-      revalidatePath("/sitemap.xml");
-      if (body.slug) revalidatePath(`/blog/${body.slug}`);
+      revalidatePath("/blog", "page");
+      revalidatePath("/sitemap.xml", "page");
+      if (slugString) revalidatePath(`/blog/${slugString}`, "page");
     }
 
     if (body._type === "blogSettings") {
-      revalidatePath("/blog");
+      revalidatePath("/blog", "page");
     }
 
     return NextResponse.json({
       revalidated: true,
       type: body._type,
-      slug: body.slug,
+      slug: slugString,
       tags: body.tags ?? [],
       now: Date.now(),
     });
