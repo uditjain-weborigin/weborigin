@@ -31,9 +31,10 @@ const funnelDisplay = Funnel_Display({
   adjustFontFallback: true,
 });
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "https://theweborigin.com";
+// IMPORTANT: never use VERCEL_URL — it resolves to the preview deployment URL
+// (e.g. my-project-abc.vercel.app), which is auth-protected on Vercel.
+// Social media crawlers get blocked trying to fetch the OG image from that URL.
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://theweborigin.com";
 
 export const metadata: Metadata = {
   title: "Web Origin — Digital Studio for Ambitious Brands",
